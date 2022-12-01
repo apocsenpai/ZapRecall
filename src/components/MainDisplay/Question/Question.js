@@ -1,8 +1,5 @@
 import setaPlay from "../../../assets/images/seta_play.png";
 import setaVirar from "../../../assets/images/seta_virar.png";
-import wrong from "../../../assets/images/icone_erro.png";
-import almost from "../../../assets/images/icone_quase.png"
-import right from "../../../assets/images/icone_certo.png"
 import styled from "styled-components";
 import { useState } from "react";
 import ResultButton from "./ResultButton";
@@ -13,6 +10,7 @@ const Question = ({
   index,
   answeredQuestion,
   answeredList,
+  showResultIcon
 }) => {
   const [closeQuestion, setCloseQuestion] = useState(true);
   const [openQuestion, setOpenQuestion] = useState(false);
@@ -38,14 +36,7 @@ const Question = ({
   function changeClosedQuestionStyle(resultValue, color) {
     setResult({...result, resultValue: resultValue, color: color})
   }
-  function showResultIcon(result){
-    if(result === 'wrong'){
-      return wrong;
-    } else if(result === 'almost'){
-      return almost;
-    }
-    return right;
-  }
+
   return (
     <>
       <li>

@@ -4,7 +4,7 @@ const ResultButton = ({ children, backgroundColor, changeClosedQuestionStyle, an
   return (
     <AnswerButton
       onClick={() => {
-        answeredQuestion(index);
+        answeredQuestion(index, value);
         toggleQuestion();
         toogleAnswer();
         changeClosedQuestionStyle(value, backgroundColor);

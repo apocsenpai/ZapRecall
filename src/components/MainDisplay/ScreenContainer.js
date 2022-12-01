@@ -33,12 +33,17 @@ const ScreenContainer = styled.main`
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
     justify-content: center;
     font-family: "Recursive";
     font-weight: 400;
     font-size: 18px;
     color: #333333;
     padding: 10px;
+    div{
+      display: flex;
+      gap: 5px;
+    }
   }
 `;
 
