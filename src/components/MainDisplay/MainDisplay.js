@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import logo from "../assets/images/logo.png";
+import logo from "../../assets/images/logo.png";
 import QuestionList from "./QuestionList/QuestionList";
 import cards from "./cards";
 import { useState } from "react";
