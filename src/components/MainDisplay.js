@@ -1,17 +1,27 @@
 import styled from "styled-components";
 import logo from "../assets/images/logo.png";
 import QuestionList from "./QuestionList/QuestionList";
+import cards from "./cards";
+import { useState } from "react";
 
 const MainDisplay = () => {
+  const [answeredList, setAnsweredList] = useState([]);
+
+  function answeredQuestion(questionIndex) {
+    setAnsweredList([...answeredList, questionIndex]);
+  }
+
   return (
     <ScreenContainer>
       <header>
         <img src={logo} alt="logo" />
         <h1>ZapRecall</h1>
       </header>
-      <QuestionList />
+      <QuestionList answeredList={answeredList} answeredQuestion={answeredQuestion} cards={cards} />
       <footer>
-        <p>0/4 CONCLUÍDOS</p>
+        <p>
+          {answeredList.length}/{cards.length} CONCLUÍDOS
+        </p>
       </footer>
     </ScreenContainer>
   );

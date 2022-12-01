@@ -4,15 +4,16 @@ import styled from "styled-components";
 import { useState } from "react";
 import ResultButton from "./ResultButton";
 
-const Question = ({ question, answer, index }) => {
+const Question = ({ question, answer, index, answeredQuestion, answeredList}) => {
   const [closeQuestion, setCloseQuestion] = useState(true);
   const [openQuestion, setOpenQuestion] = useState(false);
   const [openAnswer, setOpenAnswer] = useState(false);
-  function showQuestion() {
-    setCloseQuestion(!closeQuestion);
-    setOpenQuestion(!openQuestion);
+  function toggleQuestion(questionIndex) {
+
+    setCloseQuestion(answeredList.includes(questionIndex) ? true : !closeQuestion);
+    setOpenQuestion(answeredList.includes(questionIndex) ? false : !openQuestion);
   }
-  function showAnswer() {
+  function toogleAnswer() {
     setOpenAnswer(!openAnswer);
   }
   return (
@@ -20,21 +21,21 @@ const Question = ({ question, answer, index }) => {
       <li>
         <ClosedQuestion closeQuestion={closeQuestion}>
           <p>Pergunta {index}</p>
-          <img onClick={showQuestion} src={setaPlay}></img>
+          <img onClick={()=>toggleQuestion(index)} src={setaPlay}></img>
         </ClosedQuestion>
         {(openQuestion && !openAnswer) && (
           <OpenedQuestion>
             <p>{question}</p>
-            <img src={setaVirar} onClick={showAnswer} />
+            <img src={setaVirar} onClick={toogleAnswer} />
           </OpenedQuestion>
         )}
-        {openAnswer && (
+        {(openQuestion && openAnswer) && (
           <OpenedQuestion>
             <p>{answer}</p>
             <footer>
-              <ResultButton backgroundColor={'#FF3030'}>Não lembrei</ResultButton>
-              <ResultButton backgroundColor={'#FF922E'}>Quase não lembrei</ResultButton>
-              <ResultButton backgroundColor={'#2FBE34'}>Zap!</ResultButton>
+              <ResultButton index={index} toogleAnswer={toogleAnswer} toggleQuestion={toggleQuestion} answeredQuestion={answeredQuestion} backgroundColor={'#FF3030'}>Não lembrei</ResultButton>
+              <ResultButton index={index} toogleAnswer={toogleAnswer} toggleQuestion={toggleQuestion} answeredQuestion={answeredQuestion} backgroundColor={'#FF922E'}>Quase não lembrei</ResultButton>
+              <ResultButton index={index} toogleAnswer={toogleAnswer} toggleQuestion={toggleQuestion} answeredQuestion={answeredQuestion} backgroundColor={'#2FBE34'}>Zap!</ResultButton>
             </footer>
           </OpenedQuestion>
         )}
