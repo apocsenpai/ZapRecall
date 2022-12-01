@@ -51,14 +51,12 @@ const MainDisplay = ({ visibleWelcomeScreen }) => {
         {resultList.length === cards.length &&
           (!resultList.includes("wrong") ? (
             <ResultMessage
-              data-test="finish-text"
               text={"Parabéns"}
               icon={party}
               message={"Você não esqueceu de nenhum flashcard!"}
             />
           ) : (
             <ResultMessage
-              data-test="finish-text"
               text={"Putz..."}
               icon={sad}
               message={"Ainda faltam alguns... Mas não desanime!"}
@@ -83,7 +81,7 @@ const MainDisplay = ({ visibleWelcomeScreen }) => {
 
 const ResultMessage = ({ text, icon, message }) => {
   return (
-    <header>
+    <header data-test="finish-text">
       <p>
         <img src={icon} /> {text}
       </p>
