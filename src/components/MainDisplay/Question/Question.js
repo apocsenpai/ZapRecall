@@ -10,17 +10,22 @@ const Question = ({
   index,
   answeredQuestion,
   answeredList,
-  showResultIcon
+  showResultIcon,
 }) => {
   const [closeQuestion, setCloseQuestion] = useState(true);
   const [openQuestion, setOpenQuestion] = useState(false);
   const [openAnswer, setOpenAnswer] = useState(false);
   const [result, setResult] = useState({});
   const buttonList = [
-    {text: "Não lembrei", color: "#FF3030", value:"wrong"},
-    {text: "Quase não lembrei", color: "#FF922E", value:"almost"},
-    {text: " Zap!", color: "#2FBE34", value:"right"}
-  ]
+    { text: "Não lembrei", color: "#FF3030", value: "wrong", test: "no-btn" },
+    {
+      text: "Quase não lembrei",
+      color: "#FF922E",
+      value: "almost",
+      test: "partial-btn",
+    },
+    { text: " Zap!", color: "#2FBE34", value: "right", test: "zap-btn" },
+  ];
 
   function toggleQuestion(questionIndex) {
     setCloseQuestion(
@@ -34,41 +39,65 @@ const Question = ({
     setOpenAnswer(!openAnswer);
   }
   function changeClosedQuestionStyle(resultValue, color) {
-    setResult({...result, resultValue: resultValue, color: color})
+    setResult({ ...result, resultValue: resultValue, color: color });
+  }
+  function selectDataTest(result) {
+    if (result === "wrong") {
+      return "no-icon";
+    } else if (result === "almost") {
+      return "partial-icon";
+    }
+    return "zap-icon";
   }
 
   return (
     <>
-      <li>
-        <ClosedQuestion resultValue={result.resultValue} color={result.color}  closeQuestion={closeQuestion}>
-          <p>Pergunta {index}</p>
-          <img onClick={() => toggleQuestion(index)} src={answeredList.includes(index) ? showResultIcon(result.resultValue) : setaPlay}></img>
+      <li data-test="flashcard">
+        <ClosedQuestion
+          resultValue={result.resultValue}
+          color={result.color}
+          closeQuestion={closeQuestion}
+        >
+          <p data-test="flashcard-text">Pergunta {index}</p>
+          {!answeredList.includes(index) && (
+            <img
+              data-test="play-btn"
+              onClick={() => toggleQuestion(index)}
+              src={setaPlay}
+            />
+          )}
+          {answeredList.includes(index) && (
+            <img
+              data-test={selectDataTest(result.resultValue)}
+              src={showResultIcon(result.resultValue)}
+            />
+          )}
         </ClosedQuestion>
         {openQuestion && !openAnswer && (
           <OpenedQuestion>
-            <p>{question}</p>
-            <img src={setaVirar} onClick={toogleAnswer} />
+            <p data-test="flashcard-text">{question}</p>
+            <img data-test="turn-btn" src={setaVirar} onClick={toogleAnswer} />
           </OpenedQuestion>
         )}
         {openQuestion && openAnswer && (
           <OpenedQuestion>
-            <p>{answer}</p>
+            <p data-test="flashcard-text">{answer}</p>
             <footer>
-              {buttonList.map(({text, color, value})=>
-              <ResultButton
-                key={value}
-                changeClosedQuestionStyle={changeClosedQuestionStyle}
-                index={index}
-                toogleAnswer={toogleAnswer}
-                toggleQuestion={toggleQuestion}
-                answeredQuestion={answeredQuestion}
-                backgroundColor={color}
-                value={value}
-              >
-                {text}
-              </ResultButton>)}
-
-
+              {buttonList.map(({ text, color, value, test }) => (
+                <ResultButton
+                  key={value}
+                  changeClosedQuestionStyle={changeClosedQuestionStyle}
+                  index={index}
+                  toogleAnswer={toogleAnswer}
+                  toggleQuestion={toggleQuestion}
+                  answeredQuestion={answeredQuestion}
+                  backgroundColor={color}
+                  value={value}
+                  test={test}
+                >
+                  {text}
+                </ResultButton>
+              ))}
             </footer>
           </OpenedQuestion>
         )}
@@ -95,11 +124,11 @@ const ClosedQuestion = styled.div`
     font-size: 16px;
     line-height: 19px;
     color: #333333;
-    text-decoration: ${({resultValue})=>resultValue && "line-through"};
-    color: ${({color})=>color};
+    text-decoration: ${({ resultValue }) => resultValue && "line-through"};
+    color: ${({ color }) => color};
   }
   img {
-    cursor: ${({resultValue})=>!resultValue && "pointer"};
+    cursor: ${({ resultValue }) => !resultValue && "pointer"};
   }
 `;
 

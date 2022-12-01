@@ -1,6 +1,16 @@
 import styled from "styled-components";
 
-const ResultButton = ({ children, backgroundColor, changeClosedQuestionStyle, answeredQuestion, index, toggleQuestion, toogleAnswer, value }) => {
+const ResultButton = ({
+  children,
+  backgroundColor,
+  changeClosedQuestionStyle,
+  answeredQuestion,
+  index,
+  toggleQuestion,
+  toogleAnswer,
+  value,
+  test,
+}) => {
   return (
     <AnswerButton
       onClick={() => {
@@ -10,6 +20,7 @@ const ResultButton = ({ children, backgroundColor, changeClosedQuestionStyle, an
         changeClosedQuestionStyle(value, backgroundColor);
       }}
       backgroundColor={backgroundColor}
+      data-test={test}
     >
       {children}
     </AnswerButton>

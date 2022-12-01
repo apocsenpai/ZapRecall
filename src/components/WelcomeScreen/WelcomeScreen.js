@@ -7,7 +7,9 @@ const WelcomeScreen = ({ showMainDisplay, visibleWelcomeScreen }) => {
     <WelcomeContainer visible={visibleWelcomeScreen}>
       <img src={logo} />
       <p>ZapRecall</p>
-      <button onClick={showMainDisplay}>Iniciar Recall!</button>
+      <button data-test="start-btn" onClick={showMainDisplay}>
+        Iniciar Recall!
+      </button>
     </WelcomeContainer>
   );
 };

@@ -21,7 +21,14 @@ const MainDisplay = ({ visibleWelcomeScreen }) => {
     }
     return right;
   }
-  console.log(resultList.length)
+  function selectDataTest(result) {
+    if (result === "wrong") {
+      return "no-icon";
+    } else if (result === "almost") {
+      return "partial-icon";
+    }
+    return "zap-icon";
+  }
 
   function answeredQuestion(questionIndex, value) {
     setAnsweredList([...answeredList, questionIndex]);
@@ -40,26 +47,33 @@ const MainDisplay = ({ visibleWelcomeScreen }) => {
         cards={cards}
         showResultIcon={showResultIcon}
       />
-      <footer>
-        {(resultList.length === cards.length) && (!resultList.includes("wrong") ? (
-          <ResultMessage
-            text={"Parabéns"}
-            icon={party}
-            message={"Você não esqueceu de nenhum flashcard!"}
-          />
-        ) : (
-          <ResultMessage
-            text={"Putz..."}
-            icon={sad}
-            message={"Ainda faltam alguns... Mas não desanime!"}
-          />
-        ))}
+      <footer data-test="footer">
+        {resultList.length === cards.length &&
+          (!resultList.includes("wrong") ? (
+            <ResultMessage
+              data-test="finish-text"
+              text={"Parabéns"}
+              icon={party}
+              message={"Você não esqueceu de nenhum flashcard!"}
+            />
+          ) : (
+            <ResultMessage
+              data-test="finish-text"
+              text={"Putz..."}
+              icon={sad}
+              message={"Ainda faltam alguns... Mas não desanime!"}
+            />
+          ))}
         <p>
           {answeredList.length}/{cards.length} CONCLUÍDOS
         </p>
         <div>
           {resultList.map((r, index) => (
-            <img key={index} src={showResultIcon(r)} />
+            <img
+              key={index}
+              data-test={selectDataTest(r)}
+              src={showResultIcon(r)}
+            />
           ))}
         </div>
       </footer>
@@ -67,10 +81,12 @@ const MainDisplay = ({ visibleWelcomeScreen }) => {
   );
 };
 
-const ResultMessage = ({text, icon, message}) => {
+const ResultMessage = ({ text, icon, message }) => {
   return (
     <header>
-      <p><img src={icon}/> {text}</p>
+      <p>
+        <img src={icon} /> {text}
+      </p>
       <p>{message}</p>
     </header>
   );

@@ -3,11 +3,11 @@ const ScreenContainer = styled.main`
   background-color: #fb6b6b;
   width: 100vw;
   min-height: 100vh;
-  display: ${({ visible }) => visible ? "none" : "flex"};
+  display: ${({ visible }) => (visible ? "none" : "flex")};
   flex-direction: column;
   align-items: center;
   padding-bottom: 200px;
-  &>header {
+  & > header {
     display: flex;
     align-items: center;
     margin: 40px 0 20px 0;
@@ -33,35 +33,35 @@ const ScreenContainer = styled.main`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     justify-content: center;
     font-family: "Recursive";
     font-weight: 400;
     font-size: 18px;
     color: #333333;
     padding: 10px;
-    header{
+    header {
       display: flex;
       flex-direction: column;
       gap: 10px;
       align-items: center;
       width: 200px;
       text-align: center;
-      p{
+      p {
         font-size: 18px;
-        font-family: 'Recursive';
+        font-family: "Recursive";
         display: flex;
         align-items: center;
         gap: 8px;
-        img{
+        img {
           width: 23px;
         }
-        &:nth-child(1){
+        &:nth-child(1) {
           font-weight: 700;
         }
       }
     }
-    div{
+    div {
       display: flex;
       gap: 5px;
     }
